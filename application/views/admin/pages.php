@@ -72,7 +72,7 @@
         </button>
       </div>
       <div class="modal-body">
-    	<form id="updateForm" class="text-center border border-light p-5" enctype="multipart/form-data">
+    	<form method="post" action="<?=base_url()?>pages/edit" id="updateForm" class="text-center border border-light p-5" enctype="multipart/form-data">
 
       		<input type="hidden" name="idnum"/>
       		<input type="hidden" name="pidnum"/>
@@ -114,7 +114,7 @@
         </button>
       </div>
       <div class="modal-body">
-    	<form id="createForm" class="text-center border border-light p-5" enctype="multipart/form-data">
+    	<form method="post" action="<?=base_url()?>pages/new" id="createForm" class="text-center border border-light p-5" enctype="multipart/form-data">
 
       		<input type="hidden" name="idnum"/>
       		
@@ -154,7 +154,36 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".alert").alert('close');
-	})
+
+		if(location.hash.substring(1) == "success"){
+			toastr["success"]("Page updates have been saved.");			
+    		history.pushState("", document.title, window.location.pathname
+                                                       + window.location.search);
+		}	
+		if(location.hash.substring(1) == "error"){
+			toastr["error"]("Something went wrong. Please try again later.");			
+    		history.pushState("", document.title, window.location.pathname
+                                                       + window.location.search);
+		}	
+	});
+
+	function removeHash () { 
+	    let scrollV, scrollH, loc = window.location;
+	    if ("pushState" in history)
+	        history.pushState("", document.title, loc.pathname + loc.search);
+	    else {
+	        // Prevent scrolling by storing the page's current scroll offset
+	        scrollV = document.body.scrollTop;
+	        scrollH = document.body.scrollLeft;
+
+	        loc.hash = "";
+
+	        // Restore the scroll offset, should be flicker free
+	        document.body.scrollTop = scrollV;
+	        document.body.scrollLeft = scrollH;
+	    }
+    }
+
 	let pageTitles = ['Home', 'What we do', 'Who we are', 'For Investors', 'Improofment Case Studies'];
 	$("button[id^=upd_]").click(function(){
 		let id = $(this).attr("id").split("_")[1];
@@ -228,7 +257,7 @@
 		}
 	})
 
-	$("#createForm").on("submit",function(e){
+	/*$("#createForm").on("submit",function(e){
 		$("#createForm input[type=submit]").attr("disabled",true);
 		e.preventDefault();
 		$.ajax({
@@ -257,10 +286,10 @@
 		    	toastr["error"]("The file you are trying to upload is not allowed.");
 		      }          
 		    });
-	});
+	});*/
 
 	$("#updateForm").on("submit",function(e){
-		$("#updateForm input[type=submit]").attr("disabled",true);
+		/*$("#updateForm input[type=submit]").attr("disabled",true);
 		e.preventDefault();
 		 $.ajax({
         	url: "<?=base_url()?>pages/edit",
@@ -287,7 +316,7 @@
 				$("#updateForm input[type=submit]").removeAttr("disabled");
 		    	toastr["error"]("The file you are trying to upload is not allowed.");
 		      }          
-		    });
+		    });*/
 	});
 
 	$("[id^=deac]").click(function(data){

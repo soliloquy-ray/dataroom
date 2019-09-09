@@ -60,6 +60,7 @@ class Pages extends CI_Controller {
 		if($post['type'] == "text"){
 			$data['content'] = $post['content_text'];
 			echo $this->pagemodel->updateContent($data);
+			redirect('/pages#success');
 		}else{
 
 			$path = "";
@@ -73,7 +74,7 @@ class Pages extends CI_Controller {
 			}
 
             $config['upload_path']          = './'.$path;
-            $config['allowed_types']        = 'gif|jpg|png|mp4|pdf|avi|mov|m4v|jpeg';
+            $config['allowed_types']        = '*';
             $config['max_size']             = 0;
             $config['max_width']            = 0;
             $config['max_height']           = 0;
@@ -84,14 +85,17 @@ class Pages extends CI_Controller {
             if ( ! $this->upload->do_upload('userfile'))
             {
                 echo $this->upload->display_errors();
+				redirect('/pages#error');
             }
             else
             {
             	$retdata = $this->upload->data();
-            	$data['content'] = $path.preg_replace('/\s+/','_',$retdata['client_name']);
+            	$data['content'] = $path.preg_replace('/\s+/','_',$retdata['file_name']);
 				echo $this->pagemodel->updateContent($data);
+				redirect('/pages#success');
             }
 		}
+
 	}
 
 	public function edit(){
@@ -101,13 +105,13 @@ class Pages extends CI_Controller {
 		if($post['type'] == "text"){
 			$data['content'] = $post['content_text'];
 			echo $this->pagemodel->updateContent($data);
-			return ;
+			redirect('/pages#success');
 		}else{
 
 			if(!isset($_FILES['userfile']) || $_FILES['userfile']['error'] == UPLOAD_ERR_NO_FILE) {
 				$data['content'] = $post['oldcontent'];
 				echo $this->pagemodel->updateContent($data);
-				return ;
+				redirect('/pages#success');
 			}
 
 			$path = "";
@@ -121,7 +125,7 @@ class Pages extends CI_Controller {
 			}
 
             $config['upload_path']          = './'.$path;
-            $config['allowed_types']        = 'gif|jpg|png|mp4|pdf|avi|mov|m4v';
+            $config['allowed_types']        = '*';
             $config['max_size']             = 0;
             $config['max_width']            = 0;
             $config['max_height']           = 0;
@@ -132,12 +136,14 @@ class Pages extends CI_Controller {
             if ( ! $this->upload->do_upload('userfile'))
             {
                 echo $this->upload->display_errors();
+				redirect('/pages#error');
             }
             else
             {
             	$retdata = $this->upload->data();
-            	$data['content'] = $path.preg_replace('/\s+/','_',$retdata['client_name']);
+            	$data['content'] = $path.preg_replace('/\s+/','_',$retdata['file_name']);
 				echo $this->pagemodel->updateContent($data);
+				redirect('/pages#success');
             }
 		}
 	}

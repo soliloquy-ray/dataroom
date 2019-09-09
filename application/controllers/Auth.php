@@ -49,7 +49,7 @@ class Auth extends CI_Controller {
 				$this->session->set_userdata('adminid',$ct['id']);
 				redirect('/admin','refresh');
 			}else{
-				redirect('/auth/adminlogin', 'refresh');
+				redirect('/auth/adminlogin#error', 'refresh');
 				exit;
 				//$this->load->view('admin/login');
 			}

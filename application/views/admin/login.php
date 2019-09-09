@@ -2,7 +2,14 @@
 ?>
 <!doctype html>
 <html>
-<head>
+<head><!-- Bootstrap core CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+	<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	<style type="text/css">
 
 		@font-face {
@@ -110,6 +117,32 @@
 }
 	</style>
 </head>
+<script type="text/javascript">
+	$(document).ready(function(){	
+		if(location.hash.substring(1) == "error"){
+			toastr["error"]("Invalid username or password.");			
+    		history.pushState("", document.title, window.location.pathname
+                                                       + window.location.search);
+		}	
+	})
+
+	function removeHash () { 
+    var scrollV, scrollH, loc = window.location;
+    if ("pushState" in history)
+        history.pushState("", document.title, loc.pathname + loc.search);
+    else {
+        // Prevent scrolling by storing the page's current scroll offset
+        scrollV = document.body.scrollTop;
+        scrollH = document.body.scrollLeft;
+
+        loc.hash = "";
+
+        // Restore the scroll offset, should be flicker free
+        document.body.scrollTop = scrollV;
+        document.body.scrollLeft = scrollH;
+    }
+}
+</script>
 <body>
 	<img src="../assets/imgs/Imfree Logo.jpg" class="hero"/>
 	<div class="form">

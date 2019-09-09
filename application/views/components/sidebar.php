@@ -200,15 +200,28 @@
 		white-space: normal;
 	}
 
+	div#body div.content object, div#body div.content video, div#body div.content object{
+		display: block;
+		margin: auto;
+	}
 
-@media screen and (max-width: 980px) {
-	
-}
+	div#body div.content object, div#body div.content video{
+		height:calc(calc(70vw - 250px) - 140px);
+		width:calc(calc(100vw - 250px) - 140px);
+		object-position: center;
+	}
 
 
 @media screen and (max-width: 980px) {
 	section#nav{
 		display: none;
+	}
+
+	div#body div.content object, div#body div.content video{
+		display: block;
+		margin: auto;
+		height: calc(70vw - 140px);
+		width: calc(100vw  - 140px);
 	}
 
 	div#body{
@@ -274,6 +287,9 @@
 
 	#autohidebar.show{
 		left:0;
+		display: block;
+		max-height: 100%;
+		overflow-y: scroll;
 	}
 
 	#autohidebar .tophead{
@@ -295,6 +311,16 @@
 		display: block;
 	}
 
+	#autohidebar .l-nav nav, #autohidebar .l-nav nav ul{
+		position: relative;
+		height: 100%;
+	}
+
+	#autohidebar .l-nav{
+		display: block;
+		min-height: 360px;
+	}
+
 	section#autohidebar .l-nav nav ul li{
 		margin:0;
 		padding:15px 35px;
@@ -307,9 +333,7 @@
 	section#autohidebar .l-nav nav ul li.bottom{
 		margin:0;
 		padding:10px 35px;
-		position: absolute;
-		bottom:2vh;
-		left:0;
+		position: relative;
 		color:#ffdb00;
 	}
 
@@ -324,7 +348,11 @@
 	}
 
 	div#body div.content{
-		padding: 5px 15px;
+		padding: 10px 70px;
+	}
+
+	#footer{
+		padding:10px 70px;
 	}
 
 	div#body div.content img{
@@ -336,7 +364,7 @@
 @media screen and (max-width: 420px) {
 
 	div#body span.title-subtitle{
-		padding:30px 25px;
+		padding:30px 15px;
 	}
 
 	div#body div.content img{
@@ -344,8 +372,19 @@
 		width:100%;
 	}
 
+
+	div#body div.content{
+		padding: 10px 15px;
+	}
+
 	#footer{
 		padding:10px 15px;
+	}
+
+	div#body div.content object, div#body div.content video{
+		height: calc(70vw - 30px);
+		width: calc(100vw  - 30px);
+
 	}
 }
 </style>

@@ -12,6 +12,7 @@ class User_model extends CI_Model {
 			->from('users')
 			->where('email',$login)
 			->where('password',md5($pass))
+			->where('status',1)
 			->get()
 			->row_array();
 	}

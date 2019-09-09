@@ -72,7 +72,7 @@
 	}*/
 
 	div.profile-block span.pic img{
-		width: calc(100% - 1vh);
+		width: calc(100%);
 		height: auto;
 		object-fit: cover;
 		object-position: center;
@@ -146,6 +146,12 @@
 		color:#373a36;
 	}
 
+
+@media screen and (max-width: 980px) {
+	#footer{
+		padding: 10px 48px;
+	}
+}
 
 @media screen and (max-width: 760px) {
 
