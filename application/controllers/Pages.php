@@ -24,7 +24,6 @@ class Pages extends CI_Controller {
 
         parent::__construct(); 
         //load model 
-        $this->load->database();
         $this->load->model('Admin_model', 'adminmodel'); 
         $this->load->model('Page_model', 'pagemodel'); 
         $this->load->helper(array('form', 'url'));
@@ -59,6 +58,11 @@ class Pages extends CI_Controller {
 
 		if($post['type'] == "text"){
 			$data['content'] = $post['content_text'];
+			echo $this->pagemodel->addContent($data);
+			redirect('/pages#success');
+		}else if($post['type'] == "video"){
+			$fn = explode("/", $post['video_name']);
+			$data['content'] = "assets/video/".$fn[count($fn)-1];			
 			echo $this->pagemodel->updateContent($data);
 			redirect('/pages#success');
 		}else{
@@ -91,7 +95,7 @@ class Pages extends CI_Controller {
             {
             	$retdata = $this->upload->data();
             	$data['content'] = $path.preg_replace('/\s+/','_',$retdata['file_name']);
-				echo $this->pagemodel->updateContent($data);
+				echo $this->pagemodel->addContent($data);
 				redirect('/pages#success');
             }
 		}
@@ -104,6 +108,11 @@ class Pages extends CI_Controller {
 
 		if($post['type'] == "text"){
 			$data['content'] = $post['content_text'];
+			echo $this->pagemodel->updateContent($data);
+			redirect('/pages#success');
+		}else if($post['type'] == "video"){
+			$fn = explode("/", $post['video_name']);
+			$data['content'] = "assets/video/".$fn[count($fn)-1];			
 			echo $this->pagemodel->updateContent($data);
 			redirect('/pages#success');
 		}else{

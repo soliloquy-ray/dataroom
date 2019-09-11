@@ -327,7 +327,7 @@
       <ul>
         <li class="nav-primary"><a href="<?=base_url()?>admin">Home</a></li>
         <li class="nav-primary"><a href="<?=base_url()?>pages">Pages</a></li>
-        <li class="nav-primary"><a href="<?=base_url()?>auth/clearsession">Logout</a></li>
+        <li class="nav-primary"><a href="<?=base_url()?>auth/clearsession/1">Logout</a></li>
       </ul>
     </nav>
   </div>
@@ -356,7 +356,7 @@
       <ul>
         <li class="nav-primary"><a href="<?=base_url()?>admin">Home</a></li>
         <li class="nav-primary"><a href="<?=base_url()?>pages">Pages</a></li>
-        <li class="nav-primary"><a href="<?=base_url()?>auth/clearsession">Logout</a></li>
+        <li class="nav-primary"><a href="<?=base_url()?>auth/clearsession/1">Logout</a></li>
       </ul>
     </nav>
   </div>

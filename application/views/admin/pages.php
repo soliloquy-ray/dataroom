@@ -92,6 +92,7 @@
 
 		    <input type="hidden" name="oldcontent"/>
 		    <textarea rows="6" name="content_text" class="form-control mb-4"></textarea>
+		    <input type="text" name="video_name" class="form-control mb-4" placeholder="Enter video filename"/>
 
 
 	        <input type="submit" id="triggerUpdate" class="btn btn-primary" value="Update" >
@@ -140,6 +141,7 @@
 		    <input type="file" name="userfile" />
 
 		    <textarea rows="6" name="content_text" class="form-control mb-4"></textarea>
+		    <input type="text" name="video_name" class="form-control mb-4" placeholder="Enter video filename"/>
 
 
 	        <input type="submit" id="triggerUpdate" class="btn btn-primary" value="Create">
@@ -165,6 +167,14 @@
     		history.pushState("", document.title, window.location.pathname
                                                        + window.location.search);
 		}	
+		$("[name^=video_name]").keyup(function(){
+			let v = $(this).val();
+			let lx = v.split("/");
+			if(lx.length > 1){
+				toastr["error"]("No slashes in the filename.")
+				$(this).val(lx[lx.length-1]);
+			}
+		})
 	});
 
 	function removeHash () { 
@@ -198,25 +208,34 @@
 			$("select[name=type]").val(dt.type);
 			if(dt.type == "text"){
 				$("[name=userfile]").hide();
-				$("[name=content_text]").show();
-				$("[name=content_text]").val(dt.content);
+				$("[name^=video_name]").hide();
+				$("[name^=content_text]").show();
+				$("[name^=content_text]").val(dt.content);
+			}
+			else if(dt.type == "video"){
+				$("[name^=userfile]").hide();
+				$("[name^=content_text]").hide();
+				$("[name^=video_name]").show();
+				$("[name^=video_name]").attr("required",true);
+				$("[name^=video_name]").val(dt.content);			
 			}else{
 				/* set mimes */
 				switch(dt.type){
 					case "pdf":
 						$("[name=userfile]").attr("accept",".pdf");
 						break;
-					case "video":
-						$("[name=userfile]").attr("accept",".mp4,.m4v,.avi,.mov");
-						break;
+					// case "video":
+					// 	$("[name=userfile]").attr("accept",".mp4,.m4v,.avi,.mov");
+					// 	break;
 					case "image":
 						$("[name=userfile]").attr("accept",".jpg,.png,.gif");
 						break;
 				}
 
-				$("[name=oldcontent]").val(dt.content);
-				$("[name=userfile]").show();
-				$("[name=content_text]").hide();
+				$("[name^=oldcontent]").val(dt.content);
+				$("[name^=userfile]").show();
+				$("[name^=video_name]").show();
+				$("[name^=content_text]").hide();
 			}
 			$("#updateContentModal").modal('show');
 		});
@@ -226,6 +245,7 @@
 		$("#newContentModal select[name=type]").val("");
 		$("[name^=userfile]").hide();
 		$("[name^=content_text]").hide();
+		$("[name^=video_name]").hide();
 	})
 
 	$(".modal").on("hidden.bs.modal",function(){
@@ -237,23 +257,32 @@
 	$("select[name^=type]").change(function(){
 		if($(this).val()=="text"){
 			$("[name^=userfile]").hide();
+			$("[name^=video_name]").hide();
 			$("[name^=content_text]").show();
+			$("[name^=content_text]").attr("required",true);
 			$("[name^=content_text]").val(dt.content);
+		}else if($(this).val() == "video"){
+			$("[name^=userfile]").hide();
+			$("[name^=content_text]").hide();
+			$("[name^=video_name]").show();
+			$("[name^=video_name]").attr("required",true);
+			$("[name^=video_name]").val(dt.content);			
 		}else{
 			/* set mimes */
 			switch($(this).val()){
 				case "pdf":
 					$("[name^=userfile]").attr("accept",".pdf");
 					break;
-				case "video":
-					$("[name^=userfile]").attr("accept",".mp4,.m4v,.avi,.mov");
-					break;
+				// case "video":
+				// 	$("[name^=userfile]").attr("accept",".mp4,.m4v,.avi,.mov");
+				// 	break;
 				case "image":
 					$("[name^=userfile]").attr("accept",".jpg,.png,.gif");
 					break;
 			}
 			$("[name^=userfile]").show();
 			$("[name^=content_text]").hide();
+			$("[name^=video_name]").hide();
 		}
 	})
 

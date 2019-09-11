@@ -54,7 +54,11 @@ class Auth extends CI_Controller {
 				//$this->load->view('admin/login');
 			}
 		}else{
-			$this->load->view('admin/login');
+			if($this->session->userdata('adminid')){
+				redirect('/admin','refresh');
+			}else{
+				$this->load->view('admin/login');
+			}
 		}
 	}
 
@@ -72,15 +76,23 @@ class Auth extends CI_Controller {
 			if($data == 1){
 				$this->session->sess_destroy();
 				redirect('/auth/userlogin','refresh');
-			}else{
-				$this->load->view('user/login');
+			}else{				
+				if($this->session->userdata('userid')){
+					redirect('/dataroom','refresh');
+				}else{
+					$this->load->view('user/login');
+				}
 			}
 		}
 	}
 
-	public function clearsession(){
+	public function clearsession($adm = 0){
 		$this->session->sess_destroy();
 		echo "Session destroyed";
-		redirect('/dataroom','refresh');
+		if($adm){
+			redirect('/admin','refresh');
+		}else{
+			redirect('/dataroom','refresh');
+		}
 	}
 }

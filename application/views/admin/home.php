@@ -54,10 +54,10 @@
       <div class="modal-body">
 
 		    <!-- Name -->
-		    <input type="email" id="emailInput" maxlength="50" class="form-control mb-4" placeholder="Input Email">
+		    <input type="email" id="emailInput" maxlength="50" class="form-control mb-4" placeholder="Input Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
 
 		    <!-- Email -->
-		    <input type="text" id="codeInput" maxlength="10" class="form-control mb-4" placeholder="Input code">
+		    <input type="text" id="codeInput" maxlength="10" class="form-control mb-4" placeholder="Input code" required="required">
 
 		    <!-- Sign in button -->
 		    <button class="btn btn-info btn-block" id="generator" type="button">Generate random code</button>
@@ -117,6 +117,11 @@
 		$(this).attr('disabled','disabled');
 		let email = $("#emailInput").val();
 		let code = $("#codeInput").val();
+		if(!/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email) || code.length < 1){
+			$(this).removeAttr('disabled');			
+			toastr["error"]("Invalid email or code.");
+			return ;
+		}
 
 		let frm = {
 			'email':email,
