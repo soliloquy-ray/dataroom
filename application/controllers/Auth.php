@@ -67,6 +67,7 @@ class Auth extends CI_Controller {
 			$ct = $this->usermodel->login($post['login'],$post['password']);
 			if($ct){
 				$this->session->set_userdata('userid',$ct['id']);
+				$this->session->set_userdata('session_key',md5(date('Y-m-d H:i:s').$ct['id']));
 				redirect('/dataroom','refresh');
 			}else{
 				redirect('/auth/userlogin?error=true', 'refresh');
@@ -74,7 +75,13 @@ class Auth extends CI_Controller {
 			}
 		}else{
 			if($data == 1){
-				$this->session->sess_destroy();
+				$this->session->unset_userdata('userid');
+				$this->session->unset_userdata('session_key');
+				$this->session->unset_userdata('visitedhome');
+				$this->session->unset_userdata('visitedwhatwedo');
+				$this->session->unset_userdata('visitedwhoweare');
+				$this->session->unset_userdata('visitedforinvestors');
+				$this->session->unset_userdata('visitedcasestudies');
 				redirect('/auth/userlogin','refresh');
 			}else{				
 				if($this->session->userdata('userid')){
@@ -87,11 +94,17 @@ class Auth extends CI_Controller {
 	}
 
 	public function clearsession($adm = 0){
-		$this->session->sess_destroy();
-		echo "Session destroyed";
 		if($adm){
+			$this->session->unset_userdata('adminid');
 			redirect('/admin','refresh');
 		}else{
+			$this->session->unset_userdata('userid');
+			$this->session->unset_userdata('session_key');
+			$this->session->unset_userdata('visitedhome');
+			$this->session->unset_userdata('visitedwhatwedo');
+			$this->session->unset_userdata('visitedwhoweare');
+			$this->session->unset_userdata('visitedforinvestors');
+			$this->session->unset_userdata('visitedcasestudies');
 			redirect('/dataroom','refresh');
 		}
 	}

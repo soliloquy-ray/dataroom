@@ -36,6 +36,10 @@ class Dataroom extends CI_Controller {
 			redirect('/auth/userlogin', 'refresh');
 			exit;
 		}else{
+			if(!$this->session->userdata('visitedhome')){
+				$this->usermodel->pageVisit($this->session->userdata('userid'),1,$this->session->userdata('session_key'));
+				$this->session->set_userdata('visitedhome',true);
+			}
 			$contents = $this->pagemodel->getPageContents(1);
 			$this->load->view('components/sidebar');
 			$this->load->view('main/home',array("contents"=>$contents));
@@ -49,7 +53,11 @@ class Dataroom extends CI_Controller {
 		if(!$sess = $this->session->userdata('userid')){
 			redirect('/auth/userlogin', 'refresh');
 			exit;
-		}else{
+		}else{			
+			if(!$this->session->userdata('visitedwhatwedo')){
+				$this->usermodel->pageVisit($this->session->userdata('userid'),2,$this->session->userdata('session_key'));
+				$this->session->set_userdata('visitedwhatwedo',true);
+			}
 			$contents = $this->pagemodel->getPageContents(2);
 			$this->load->view('components/sidebar');
 			$this->load->view('main/what-we-do',array("contents"=>$contents));
@@ -64,6 +72,10 @@ class Dataroom extends CI_Controller {
 			redirect('/auth/userlogin', 'refresh');
 			exit;
 		}else{
+			if(!$this->session->userdata('visitedwhoweare')){
+				$this->usermodel->pageVisit($this->session->userdata('userid'),3,$this->session->userdata('session_key'));
+				$this->session->set_userdata('visitedwhoweare',true);
+			}
 			$this->load->view('components/sidebar');
 			$this->load->view('main/who-we-are');
 			return true;
@@ -76,7 +88,11 @@ class Dataroom extends CI_Controller {
 		if(!$sess = $this->session->userdata('userid')){
 			redirect('/auth/userlogin', 'refresh');
 			exit;
-		}else{
+		}else{			
+			if(!$this->session->userdata('visitedforinvestors')){
+				$this->usermodel->pageVisit($this->session->userdata('userid'),4,$this->session->userdata('session_key'));
+				$this->session->set_userdata('visitedforinvestors',true);
+			}
 			$contents = $this->pagemodel->getPageContents(4);
 			$this->load->view('components/sidebar');
 			$this->load->view('main/for-investors',array("contents"=>$contents));
@@ -91,6 +107,10 @@ class Dataroom extends CI_Controller {
 			redirect('/auth/userlogin', 'refresh');
 			exit;
 		}else{
+			if(!$this->session->userdata('visitedcasestudies')){
+				$this->usermodel->pageVisit($this->session->userdata('userid'),5,$this->session->userdata('session_key'));
+				$this->session->set_userdata('visitedcasestudies',true);
+			}
 			$contents = $this->pagemodel->getPageContents(5);
 			$this->load->view('components/sidebar');
 			$this->load->view('main/case-studies',array("contents"=>$contents));

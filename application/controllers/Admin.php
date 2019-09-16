@@ -43,8 +43,30 @@ class Admin extends CI_Controller {
 
 	}
 
+	public function visits()
+	{
+		if(!$sess = $this->session->userdata('adminid')){
+			redirect('/auth/adminlogin', 'refresh');
+			exit;
+		}else{
+			$v = $this->get_visit_list();
+			$this->load->view('components/admin-sidebar');
+			$this->load->view('admin/visits', array('visits'=>$v));
+			return true;
+		}
+
+	}
+
 	public function get_user_list(){
 		return $this->adminmodel->userList();
+	}
+
+	public function get_visit_list(){
+		return $this->adminmodel->visitList();
+	}
+
+	public function get_user_site_visits($id = 0){
+		echo json_encode($this->usermodel->getUserSiteVisits($id));
 	}
 
 	public function create_user(){

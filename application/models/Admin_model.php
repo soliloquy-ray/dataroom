@@ -17,11 +17,13 @@ class Admin_model extends CI_Model {
 	}
 
 	public function userList(){
-		return $this->db->select('id,email,raw,date_added')
-			->from('users')
-			->where('status',1)
-			->get()
-			->result_array();
+		$i = $this->db->query("SELECT u.id, u.email, u.raw, u.date_added, COUNT(distinct s.session_key) as logins FROM users u LEFT JOIN site_visits s ON u.id = s.user_id WHERE u.status = 1 GROUP BY u.id");
+		return $i->result_array();
+	}
+
+	public function visitList(){
+		$i = $this->db->query("SELECT u.id, u.email, DATE_ADD(s.timestamp, INTERVAL 8 HOUR) as timestamp, s.page_id, p.title FROM users u INNER JOIN site_visits s ON u.id = s.user_id inner join pages p on s.page_id = p.id ORDER BY s.timestamp DESC");
+		return $i->result_array();
 	}
 
 	public function updatePassword($id = 0, $pass = ''){

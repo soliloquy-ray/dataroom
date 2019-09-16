@@ -5,6 +5,9 @@
 	button{
 		color:#fff !important;
 	}
+	table, tr, td, th{
+		font-family:'bariol'; 
+	}
 </style>
 <section id="main">
 	<table class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -14,6 +17,7 @@
 	      <th>Email</th>
 	      <th>Code</th>
 	      <th>Date Created</th>
+	      <th>Data Room Visits</th>
 	      <th>Action</th>
 	    </tr>
 	  </thead>
@@ -21,11 +25,13 @@
 <?php foreach($users as $u): ?>
 		<tr>	  
 			<!-- <td><?=$u['id']?></td> -->
-			<td><?=$u['email']?></td>
+			<td class="email"><?=$u['email']?></td>
 			<td><?=$u['raw']?></td>
 			<td><?=date('F d, Y',strtotime($u['date_added']))?></td>
+			<td><?=$u['logins']?></td>
 			<td>
 				<button type="button" class="btn blue-gradient btn-sm" id="changePass_<?=$u['id']?>">Change Code</button>
+				<button type="button" class="btn btn-secondary btn-sm" id="userv_<?=$u['id']?>">User Visits</button>
 				<button type="button" class="btn btn-danger btn-sm" id="deac_<?=$u['id']?>">Deactivate</button>
 			</td>
 		</tr>
@@ -103,6 +109,37 @@
   </div>
 </div>
 
+<div class="modal fade" id="siteVisitsModal" tabindex="-1" role="dialog" aria-labelledby="siteVisitsModal"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Data Room Site Visits</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+    	<table class="table table-striped table-bordered" id="userVisit" cellspacing="0" width="100%">
+		  <thead>
+		    <tr>
+		      <!-- <th>ID</th> -->
+		      <th>User</th>
+		      <th>Date Visited</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  </tbody>
+		</table>
+
+      </div> 
+      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    	
+      </div>  	
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
 	$("[id^=generator]").click(function(){
 		let gn = makeid(8);
@@ -111,6 +148,38 @@
 
 	$(".modal").on("hidden.bs.modal",function(){
 		$("input").val("");
+	});
+
+	$("[id^=userv]").click(function(data){
+		let id = $(this).attr('id').split("_")[1];
+		let tbd = $("#userVisit");
+		let sibl = $(this).parents().siblings('.email').text();
+
+		$.post('<?=base_url()?>admin/get_user_site_visits/'+id,{},function(data){
+			let dt = JSON.parse(data);
+			if(dt.length > 0){
+				dt.map(a=>{
+					console.log(sibl,dt);
+					let tr = document.createElement('tr');
+					let td1 = document.createElement('td');
+					td1.textContent = sibl;
+					let td2 = document.createElement('td');
+					td2.textContent = a.timestamp;
+					tr.append(td1);
+					tr.append(td2);
+					tbd.append(tr);
+				});
+			}else{
+				let tr = document.createElement('tr');
+				$(tr).html("<td colspan='2' style='text-align:center;'> No Data</td>");
+				tbd.append(tr);
+			}
+			$("#siteVisitsModal").modal('show');
+		});
+	});
+
+	$("#siteVisitsModal").on("hidden.bs.modal",function(){
+		$("#userVisit").html("<thead><tr><th>User</th><th>Date Visited</th></tr></thead>");
 	});
 
 	$("#triggerCreate").click(function(){
@@ -177,5 +246,8 @@
 	   return result;
 	}
 
+	$(document).ready(function(){
+		$("table.table").DataTable();
+	});
 	
 </script>

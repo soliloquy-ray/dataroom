@@ -51,6 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'dataroom';
 $route['home'] = 'dataroom';
+$route['visits'] = 'admin/visits';
 $route['what-we-do'] = 'dataroom/what_we_do';
 $route['who-we-are'] = 'dataroom/who_we_are';
 $route['for-investors'] = 'dataroom/for_investors';

@@ -174,7 +174,10 @@
 				toastr["error"]("No slashes in the filename.")
 				$(this).val(lx[lx.length-1]);
 			}
-		})
+		});
+	
+		$("table.table").DataTable();
+	
 	});
 
 	function removeHash () { 
@@ -213,11 +216,12 @@
 				$("[name^=content_text]").val(dt.content);
 			}
 			else if(dt.type == "video"){
+				let fnm = dt.content.split("/");
 				$("[name^=userfile]").hide();
 				$("[name^=content_text]").hide();
 				$("[name^=video_name]").show();
 				$("[name^=video_name]").attr("required",true);
-				$("[name^=video_name]").val(dt.content);			
+				$("[name^=video_name]").val(fnm[fnm.length - 1]);			
 			}else{
 				/* set mimes */
 				switch(dt.type){
@@ -234,7 +238,7 @@
 
 				$("[name^=oldcontent]").val(dt.content);
 				$("[name^=userfile]").show();
-				$("[name^=video_name]").show();
+				$("[name^=video_name]").hide();
 				$("[name^=content_text]").hide();
 			}
 			$("#updateContentModal").modal('show');

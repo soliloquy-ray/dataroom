@@ -21,6 +21,7 @@
 <!-- Material Design Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/css/mdb.min.css" rel="stylesheet">
 <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
 
 	<!-- JQuery -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -32,6 +33,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/js/mdb.min.js"></script>
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
 
 <style type="text/css">	
@@ -327,6 +329,7 @@
       <ul>
         <li class="nav-primary"><a href="<?=base_url()?>admin">Home</a></li>
         <li class="nav-primary"><a href="<?=base_url()?>pages">Pages</a></li>
+        <li class="nav-primary"><a href="<?=base_url()?>visits">Page Visits</a></li>
         <li class="nav-primary"><a href="<?=base_url()?>auth/clearsession/1">Logout</a></li>
       </ul>
     </nav>
@@ -356,6 +359,7 @@
       <ul>
         <li class="nav-primary"><a href="<?=base_url()?>admin">Home</a></li>
         <li class="nav-primary"><a href="<?=base_url()?>pages">Pages</a></li>
+        <li class="nav-primary"><a href="<?=base_url()?>visits">Page Visits</a></li>
         <li class="nav-primary"><a href="<?=base_url()?>auth/clearsession/1">Logout</a></li>
       </ul>
     </nav>
